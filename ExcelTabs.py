@@ -2,15 +2,9 @@ import os
 import glob
 import sys
 import xlrd, xlwt
-import time
-# from sets import Set
+# import time
 
 allowedChars = set('0123456789')
-
-def find_files_in_dir(dir, ext):
-    os.chdir(dir)
-    result = [i for i in glob.glob('*.{}'.format(ext))]
-    return result
 
 def process_file(inputfile):
     xl = xlrd.open_workbook(inputfile, on_demand = True, encoding_override="cp1251")
@@ -35,7 +29,7 @@ def process_file(inputfile):
     del xl
 
 if __name__ == "__main__":
-    start_time = time.clock()
+    # start_time = time.clock()
     path = ""
     if len(sys.argv) > 1:
         path = sys.argv[1]
@@ -45,6 +39,6 @@ if __name__ == "__main__":
     else:
         if os.path.isfile(path):
             process_file(path)
-            print(time.clock() - start_time, "seconds")
+            # print(time.clock() - start_time, "seconds")
         elif os.path.isdir(path):
             print("Excel file must be specified as first parameter")
