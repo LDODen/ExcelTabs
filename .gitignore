@@ -1,6 +1,8 @@
 __pycache__/
 build/
 dist/
+dist/*.exe
 ExcelTabs.spec
 *.xls
 *.xlsx
+*.exe

@@ -5,6 +5,22 @@ import xlrd, xlwt
 # import time
 
 allowedChars = set('0123456789')
+al = xlwt.Alignment()
+al.horz = xlwt.Alignment.HORZ_CENTER
+al.vert = xlwt.Alignment.VERT_CENTER
+al.wrap = True
+
+fnt = xlwt.Font()
+fnt.bold = True
+fnt.height = 8*20
+borders = xlwt.Borders()
+borders.top = 6 #xlwt.Borders.double
+borders.bottom = 1#xlwt.Borders.thin
+
+borders_style = xlwt.XFStyle()
+borders_style.borders = borders
+borders_style.font = fnt
+borders_style.alignment = al
 
 def process_file(inputfile):
     xl = xlrd.open_workbook(inputfile, on_demand = True, encoding_override="cp1251")
@@ -21,8 +37,18 @@ def process_file(inputfile):
             for col_index in range(sheet.ncols):
                 if row_index == 0:
                     continue
-                newSheet.write(row_index, col_index, sheet.cell(row_index,col_index).value)
-
+                if row_index == 5:
+                    newSheet.write(row_index, col_index, sheet.cell(row_index,col_index).value, borders_style)
+                else:
+                    newSheet.write(row_index, col_index, sheet.cell(row_index,col_index).value)
+        # newSheet.row(5).set_style(borders_style)
+        newSheet.row(5).height_mismatch = 1
+        newSheet.row(5).height = 650
+        newSheet.col(0).width = 256*2
+        newSheet.col(1).width = 256*10
+        newSheet.col(2).width = 256*18
+        newSheet.col(3).width = 256*18
+        newSheet.col(6).width = 256*11
         newExcelFile.save(os.path.join(directory, sheet.name + '.xls'))
 
     xl.release_resources()
